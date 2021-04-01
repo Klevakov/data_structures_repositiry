@@ -90,9 +90,17 @@ def test_pop_extreme_values(a):
 @pytest.mark.parametrize("a", [(3, 10, 15), ('first', 'second', 'third')])
 def test_pop(a):
     lnkd_lst = LinkedList()
+    my_lst = []
     for i in a:
         lnkd_lst.append(i)
-    assert lnkd_lst.get(0).value == lnkd_lst.pop(0)
+        my_lst.append(i)
+    my_lst.pop(1)
+    my_str = ''
+    for i in my_lst:
+        my_str += f'{i} '
+    assert lnkd_lst.get(1).value == lnkd_lst.pop(1)
+    assert lnkd_lst.out() == my_str
+
 
 
 @pytest.mark.parametrize("lst", [[i for i in range(1, 10)], [i ** 2 for i in range(10, 2, -1)]])
