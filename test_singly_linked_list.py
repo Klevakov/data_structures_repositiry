@@ -98,7 +98,7 @@ def test_assign(lst):
         assert lnkd_lst.get(i).value == 50
 
 @pytest.mark.parametrize("a", [-1, 9, 15])
-def test_assert_extreme_values(a):
+def test_assign_extreme_values(a):
     with pytest.raises(IndexError):
         lnkd_lst = LinkedList()
         lnkd_lst.append('Hello')

@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Any
 
 
 class LinkedList:
@@ -105,7 +105,8 @@ class LinkedList:
             return remove_value
         else:
             previous_node = self.get(index - 1)
-            remove_value = previous_node.next_node.value
+            remove_node = previous_node.next_node
+            remove_value = remove_node.value
             previous_node.next_node = remove_node.next_node
             if index == self.length - 1:
                 self.tail = previous_node
@@ -121,16 +122,7 @@ class LinkedList:
         """The method replaces the node's value and returns the old value."""
         if index < 0 or self.length == 0 or index > self.length - 1:
             raise IndexError
-        if index == 0:
-            remove_value = self.head.value
-            self.head.value = value
-            if self.length == 1:
-                self.tail.value == value
-            return remove_value
-        else:
-            node = self.get(index)
-            remove_value = node.value
-            node.value = value
-            if index == self.length - 1:
-                self.tail = node
-            return remove_value
+        node = self.get(index)
+        remove_value = node.value
+        node.value = value
+        return remove_value
