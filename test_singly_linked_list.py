@@ -1,5 +1,4 @@
 from singly_linked_list import LinkedList
-from random import randint
 import pytest
 
 
