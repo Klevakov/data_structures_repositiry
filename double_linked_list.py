@@ -8,8 +8,9 @@ class LinkedList:
 
     class Node:
 
-        def __init__(self, value: Any, next_node=None) -> None:
+        def __init__(self, value: Any, prev_node=None, next_node=None) -> None:
             self.value = value
+            self.prev_node = prev_node
             self.next_node = next_node
 
         def __str__(self):
@@ -23,6 +24,7 @@ class LinkedList:
             self.tail = new_node
         else:
             self.tail.next_node = new_node
+            new_node.prev_node = self.tail
             self.tail = new_node
         self.length += 1
         # print(f'{new_node} was added')
@@ -37,9 +39,7 @@ class LinkedList:
             res_str = ''
             while node.next_node:
                 res_str += f'{node.value} '
-                # print(node.value, end=' / ')
                 node = node.next_node
-            # print(node.value)
             return res_str + f'{node.value} '
 
     def insert(self, value: Any, index: int) -> None:
@@ -56,7 +56,7 @@ class LinkedList:
             # print(f'{new_node}" was inserted to the list at position "{index}"')
         else:
             previous_node = self.get(index - 1)
-            new_node = self.Node(value, next_node=previous_node.next_node)
+            new_node = self.Node(value, next_node=previous_node.next_node, prev_node=previous_node)
             previous_node.next_node = new_node
             if index == self.length:
                 self.tail = new_node
@@ -74,11 +74,16 @@ class LinkedList:
             node = node.next_node
             i += 1
         # if node == self.head:
-            # print(f'The node with the value "{node.value}" is the head and has a link to the next node with the value "{node.next_node.value}"')
+        #     print(f'The node with the value "{node.value}" is the head '
+        #           f'and has a link to the next node with the value "{node.next_node.value}"')
+        #           f'and a link to the previous node with the value "{previous_node.value}"')
         # elif node.next_node:
-            # print(f'The node with the value "{node.value}" has a link to the next node with the value "{node.next_node.value}"')
+        #     print(f'The node with the value "{node.value}" '
+        #           f'has a link to the next node with the value "{node.next_node.value}"'
+        #           f'and a link to the previous node with the value "{previous_node.value}"')
         # else:
-            # print(f'The node with the value "{node.value}" is the last one')
+        #     print(f'The node with the value "{node.value}" is the last one'
+        #           f'and a link to the previous node with the value "{previous_node.value}"')
         return node
 
     def pop(self, index: int) -> Any:
@@ -100,6 +105,7 @@ class LinkedList:
         if index == 0:
             remove_value = self.head.value
             self.head = self.head.next_node
+            self.head.prev_node = None
             self.length -= 1
             # print(f'{remove_node} was deleted.')
             return remove_value
@@ -108,6 +114,7 @@ class LinkedList:
             remove_node = previous_node.next_node
             remove_value = remove_node.value
             previous_node.next_node = remove_node.next_node
+            remove_node.next_node.prev_value = previous_node
             if index == self.length - 1:
                 self.tail = previous_node
             self.length -= 1
@@ -115,7 +122,7 @@ class LinkedList:
             return remove_value
 
     def get_len(self) -> int:
-        # print(f'List length = " {self.length}"')
+        # print(f'List length = "{self.length}"')
         return self.length
 
     def assign(self, value: Any, index: int) -> Any:
